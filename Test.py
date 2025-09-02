@@ -1,11 +1,11 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 
-st.title("📊 Simple Streamlit Chart")
+# Title
+st.title("Hello Streamlit 👋")
 
-# Create random data
-data = pd.DataFrame(np.random.randn(20, 3), columns=["A", "B", "C"])
+# Input
+name = st.text_input("Enter your name:")
 
-# Display chart
-st.line_chart(data)
+# Button
+if st.button("Say Hello"):
+    st.write(f"Hello, {name}!")
