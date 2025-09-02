@@ -1,24 +1,21 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
-st.title("Finance Data Viewer")
+st.title("📊 Finance Data Visualization")
 
-# Read data directly from the remote CSV URL
-DATA_URL = ("https://raw.githubusercontent.com/"
-            "norashikinyusof277/ISD0Part2/main/Finance_data.csv")
+# Load data
+DATA_URL = "https://raw.githubusercontent.com/norashikinyusof277/ISD0Part2/main/Finance_data.csv"
+df = pd.read_csv(DATA_URL)
 
-@st.cache_data
-def load_data(url):
-    return pd.read_csv(url)
+# Plot histogram of ages
+st.subheader("Distribution of Ages")
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(df['age'], bins=10, edgecolor='black')
+ax.set_title('Distribution of Ages')
+ax.set_xlabel('Age')
+ax.set_ylabel('Frequency')
+ax.grid(axis='y', alpha=0.75)
 
-df = load_data(DATA_URL)
-
-st.subheader("Raw Data")
-st.dataframe(df)
-
-st.subheader("Summary Statistics (Numeric Columns)")
-st.write(df.describe())
-
-st.subheader("Investment Avenues Distribution")
-if "Investment_Avenues" in df.columns:
-    st.bar_chart(df["Investment_Avenues"].value_counts())
+# Display in Streamlit
+st.pyplot(fig)
