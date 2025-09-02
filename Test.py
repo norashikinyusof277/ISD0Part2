@@ -1,11 +1,24 @@
 import streamlit as st
+import pandas as pd
 
-# Title
-st.title("Hello Streamlit 👋")
+st.title("Finance Data Viewer")
 
-# Input
-name = st.text_input("Enter your name:")
+# Read data directly from the remote CSV URL
+DATA_URL = ("https://raw.githubusercontent.com/"
+            "norashikinyusof277/ISD0Part2/main/Finance_data.csv")
 
-# Button
-if st.button("Say Hello"):
-    st.write(f"Hello, {name}!")
+@st.cache_data
+def load_data(url):
+    return pd.read_csv(url)
+
+df = load_data(DATA_URL)
+
+st.subheader("Raw Data")
+st.dataframe(df)
+
+st.subheader("Summary Statistics (Numeric Columns)")
+st.write(df.describe())
+
+st.subheader("Investment Avenues Distribution")
+if "Investment_Avenues" in df.columns:
+    st.bar_chart(df["Investment_Avenues"].value_counts())
