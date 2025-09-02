@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.title("📊 Finance Data Visualization")
 
@@ -8,14 +9,16 @@ st.title("📊 Finance Data Visualization")
 DATA_URL = "https://raw.githubusercontent.com/norashikinyusof277/ISD0Part2/main/Finance_data.csv"
 df = pd.read_csv(DATA_URL)
 
-# Plot histogram of ages
-st.subheader("Distribution of Ages")
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.hist(df['age'], bins=10, edgecolor='black')
-ax.set_title('Distribution of Ages')
-ax.set_xlabel('Age')
-ax.set_ylabel('Frequency')
-ax.grid(axis='y', alpha=0.75)
+# Scatterplot with seaborn
+st.subheader("Relationship between Age, Fixed Deposits, and Gender")
 
-# Display in Streamlit
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.scatterplot(data=df, x='age', y='Fixed_Deposits', hue='gender', ax=ax)
+
+ax.set_title('Relationship between Age, Fixed Deposits, and Gender')
+ax.set_xlabel('Age')
+ax.set_ylabel('Fixed Deposits')
+ax.grid(True)
+
+# Show in Streamlit
 st.pyplot(fig)
